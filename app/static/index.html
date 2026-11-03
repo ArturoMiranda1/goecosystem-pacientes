@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GoEcosystem | Pacientes</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div>
+      <strong>GoEcosystem</strong>
+      <span>Seguimiento de pacientes</span>
+    </div>
+    <button id="logout" class="secondary" hidden>Cerrar sesión</button>
+  </header>
+
+  <main>
+    <p id="message" role="status" aria-live="polite" hidden></p>
+
+    <section id="login-view" class="login-card">
+      <h1>Iniciar sesión</h1>
+      <p>Accede al módulo de seguimiento asistencial.</p>
+
+      <form id="login-form">
+        <label>
+          Usuario
+          <input name="username" autocomplete="username" required>
+        </label>
+        <label>
+          Contraseña
+          <input
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
+        </label>
+        <button type="submit">Ingresar</button>
+      </form>
+    </section>
+
+    <section id="app-view" hidden>
+      <div class="section-heading">
+        <div>
+          <h1>Panel de pacientes</h1>
+          <p id="welcome"></p>
+        </div>
+        <button id="new-patient">Registrar paciente</button>
+      </div>
+
+      <section id="dashboard" class="metrics" aria-label="Indicadores"></section>
+
+      <section class="panel">
+        <h2>Listado de pacientes</h2>
+
+        <form id="filter-form" class="filters">
+          <label>
+            Buscar por nombre o documento
+            <input id="search" type="search" placeholder="Nombre o documento">
+          </label>
+
+          <label>
+            Estado
+            <select id="status-filter">
+              <option value="">Todos</option>
+              <option>Pendiente</option>
+              <option>En atención</option>
+              <option>Atendido</option>
+            </select>
+          </label>
+
+          <label>
+            Prioridad
+            <select id="priority-filter">
+              <option value="">Todas</option>
+              <option>Alta</option>
+              <option>Media</option>
+              <option>Baja</option>
+            </select>
+          </label>
+
+          <button type="submit">Buscar</button>
+          <button id="clear-filters" type="button" class="secondary">
+            Limpiar
+          </button>
+        </form>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Paciente</th>
+                <th>Documento</th>
+                <th>EPS</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="patients-body"></tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <p id="page-info"></p>
+          <div>
+            <button id="previous" class="secondary">Anterior</button>
+            <button id="next" class="secondary">Siguiente</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="patient-dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title">Registrar paciente</h2>
+    <p id="form-error" class="form-error" role="alert" hidden></p>
+
+    <form id="patient-form">
+      <div class="form-grid">
+        <label>
+          Nombre completo
+          <input name="full_name" minlength="2" maxlength="150" required>
+        </label>
+
+        <label>
+          Tipo de documento
+          <select name="document_type" required>
+            <option>CC</option>
+            <option>TI</option>
+            <option>CE</option>
+            <option>PA</option>
+          </select>
+        </label>
+
+        <label>
+          Número de documento
+          <input name="document" maxlength="20" required>
+        </label>
+
+        <label>
+          Fecha de nacimiento
+          <input name="birth_date" type="date" required>
+        </label>
+
+        <label>
+          Género
+          <select name="gender" required>
+            <option>Femenino</option>
+            <option>Masculino</option>
+            <option>Otro</option>
+            <option>Prefiere no informar</option>
+          </select>
+        </label>
+
+        <label>
+          Teléfono
+          <input name="phone" type="tel" minlength="7" maxlength="25" required>
+        </label>
+
+        <label>
+          Correo electrónico (opcional)
+          <input name="email" type="email" maxlength="254">
+        </label>
+
+        <label>
+          Ciudad (opcional)
+          <input name="city" maxlength="100">
+        </label>
+
+        <label>
+          EPS
+          <select name="eps_code" id="eps-select" required></select>
+        </label>
+
+        <label>
+          Prioridad
+          <select name="priority" required>
+            <option>Alta</option>
+            <option selected>Media</option>
+            <option>Baja</option>
+          </select>
+        </label>
+
+        <label>
+          Estado
+          <select name="status" required>
+            <option>Pendiente</option>
+            <option>En atención</option>
+            <option>Atendido</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="dialog-actions">
+        <button id="cancel-dialog" type="button" class="secondary">
+          Cancelar
+        </button>
+        <button id="save-patient" type="submit">Guardar paciente</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
