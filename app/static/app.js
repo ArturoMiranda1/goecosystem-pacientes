@@ -7,11 +7,23 @@ let loading = false;
 const pageSize = 20;
 let filters = {};
 
+let messageTimeout = null;
+
 function showMessage(text, error = false) {
+  clearTimeout(messageTimeout);
+
   const element = $("message");
   element.textContent = text;
   element.className = error ? "error" : "success";
   element.hidden = false;
+
+  if (!error) {
+    messageTimeout = setTimeout(() => {
+      element.hidden = true;
+      element.textContent = "";
+      messageTimeout = null;
+    }, 5000);
+  }
 }
 
 function showLogin() {
