@@ -62,7 +62,7 @@ class Patient(Base):
             name="ck_patients_document_type",
         ),
         CheckConstraint(
-            "gender IN ('Femenino', 'Masculino', 'Otro')",
+            "gender IN ('Femenino', 'Masculino', 'Otro', 'Prefiere no informar')",
             name="ck_patients_gender",
         ),
         CheckConstraint(
@@ -94,7 +94,7 @@ class Patient(Base):
         String(150), nullable=False, index=True
     )
     birth_date: Mapped[date] = mapped_column(Date, nullable=False)
-    gender: Mapped[str] = mapped_column(String(20), nullable=False)
+    gender: Mapped[str] = mapped_column(String(35), nullable=False)
     phone: Mapped[str] = mapped_column(String(25), nullable=False)
     email: Mapped[str | None] = mapped_column(String(254))
     city: Mapped[str | None] = mapped_column(String(100))
