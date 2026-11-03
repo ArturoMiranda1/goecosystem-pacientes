@@ -111,7 +111,9 @@ def main():
                                 required_text(row["password_demo"])
                             ),
                             role=required_text(row["rol"]),
-                            active=str(row["activo"]).strip() == "1",
+                            active=str(row["activo"]).strip().lower() in {
+                                "1", "1.0", "true"
+                            },
                         )
                     )
                     usernames.add(username)
